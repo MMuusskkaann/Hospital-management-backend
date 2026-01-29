@@ -31,6 +31,7 @@ public class PatientTests {
 
     @Test
     public void testTransactionMethods(){
+<<<<<<< HEAD
 //         Patient patient= patientService.getPatientById(1L);
 //
 //        System.out.println(patient);
@@ -47,5 +48,10 @@ public class PatientTests {
         for(Patient patient : patientList){
             System.out.println(patient);
         }
+=======
+         Patient patient= patientService.getPatientById(1L);
+
+        System.out.println(patient);
+>>>>>>> 2e05cabe0e7f7b4311c45cc3f70ac79d378af7a9
     }
 }

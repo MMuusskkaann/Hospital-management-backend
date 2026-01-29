@@ -1,43 +1,29 @@
 package com.muskan.Hospital.Management.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @ToString
-@Table(
-        name = "patient_table",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "unique_patient_email", columnNames = {"email"}),
-                @UniqueConstraint(name = "unique_patient_name_birthDate", columnNames = {"name","birthDate"}),
-        },
-        indexes = {
-                @Index(name = "idx_patient_birth_data",columnList = "birthDate")
-        }
-)
+@Table
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name  = "patient_name")
     private String name;
 
-    @ToString.Exclude
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     private String email;
 
     private String gender;
-
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
 
     public Long getId() {
         return id;
