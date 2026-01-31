@@ -17,5 +17,15 @@ public class PatientTests {
     @Test
     public  void testPatientRepository(){
        List<Patient> patientList = patientRepository.findAll();
+       List<Patient> patients = patientRepository.findAll();
+       System.out.println("Number of patients: " + patients.size());
+       patients.forEach(System.out::println);
+    }
+
+    @Test
+    public void testTransactionMethods(){
+         Patient patient= patientService.getPatientById(1L);
+
+        System.out.println(patient);
     }
 }
