@@ -1,0 +1,38 @@
+package com.muskan.Hospital.Management.entity;
+
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Department {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false,unique = true,length = 100)
+    private String name;
+
+    @OneToOne
+    private doctors headDoctor;
+
+    @ManyToMany
+
+    @JoinColumn(
+            name = "my_dept_doctors",
+            joinColumns = @JoinColumn(name = "dept_id"),
+            inverseJoinColumn = @JoinColumn(name = "doctor_id")
+    )
+
+    private Set<doctors> doctor = new HashSet<>() ;
+}
