@@ -1,9 +1,7 @@
 package com.muskan.Hospital.Management.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.muskan.Hospital.Management.dto.BloodGroupType;
+import jakarta.persistence.*;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -25,8 +23,20 @@ public class Patient {
 
     private String gender;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "blood_group")
+    private BloodGroupType bloodGroup;
+
     public Long getId() {
         return id;
+    }
+
+    public BloodGroupType getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(BloodGroupType bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 
     public void setId(Long id) {
