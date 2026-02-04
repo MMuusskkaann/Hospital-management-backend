@@ -1,5 +1,7 @@
 package com.muskan.Hospital.Management.service;
 
+import com.muskan.Hospital.Management.dto.BloodGroupType;
+import com.muskan.Hospital.Management.dto.BloodGroupcountResponseEntity;
 import com.muskan.Hospital.Management.entity.Patient;
 import com.muskan.Hospital.Management.repository.PatientRepository;
 import org.junit.jupiter.api.Test;
@@ -51,8 +53,13 @@ public class PatientTest {
 //            System.out.println(objects[0]+ " " +objects[1]);
 //        }
 
-        int rowsUpdate = patientRepository.updateNameWithId("Arav sharma", 1L);
-        System.out.println(rowsUpdate);
+//        int rowsUpdate = patientRepository.updateNameWithId("Arav sharma", 1L);
+//        System.out.println(rowsUpdate);
+
+        List<BloodGroupcountResponseEntity> list = patientRepository.countEachBloodGroupType();
+        for (BloodGroupcountResponseEntity b : list) {
+            System.out.println(b.getBloodGroupType() + " -> " + b.getCount());
+        }
     }
 }
 
