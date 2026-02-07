@@ -3,8 +3,10 @@ package com.muskan.Hospital.Management.entity;
 import com.muskan.Hospital.Management.dto.BloodGroupType;
 import jakarta.persistence.*;
 import lombok.ToString;
+import org.apache.catalina.LifecycleState;
 
 import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @ToString
@@ -74,6 +76,14 @@ public class Patient {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    @OneToOne
+    @JoinColumn(name = "patient_insurance_id") //owning side
+    private Insurance insurance;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointments;
+
 
     //    @Override
 //    public String toString() {
