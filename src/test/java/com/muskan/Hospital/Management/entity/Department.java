@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.*;
-
-B
 @Entity
 @Getter
 @Setter
@@ -29,11 +27,12 @@ public class Department {
 
     @ManyToMany
 
+
     @JoinTable(
             name = "my_dept_doctors",
             joinColumns = @JoinColumn(name = "dept_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
-    )
+
 
     private Set<doctors> doctor = new HashSet<>() ;
 }

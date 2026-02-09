@@ -1,5 +1,4 @@
 package com.muskan.Hospital.Management.entity;
-import java.util.*;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,8 +8,7 @@ import lombok.Setter;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
-import java.util.HashSet;
-
+import java.util.*;
 @Entity
 @Getter
 @Setter
@@ -33,5 +31,6 @@ public class doctors {
 
    @ManyToMany(mappedBy = "doctors")
    private Set<Department> department = new HashSet<>();
+
 
 }
