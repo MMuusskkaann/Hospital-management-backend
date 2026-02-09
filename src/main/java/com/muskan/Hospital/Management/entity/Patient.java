@@ -3,7 +3,6 @@ package com.muskan.Hospital.Management.entity;
 import com.muskan.Hospital.Management.dto.BloodGroupType;
 import jakarta.persistence.*;
 import lombok.ToString;
-import org.apache.catalina.LifecycleState;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -28,6 +27,8 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     @Column(name = "blood_group")
     private BloodGroupType bloodGroup;
+
+
 
     public Long getId() {
         return id;
@@ -80,6 +81,22 @@ public class Patient {
     @OneToOne
     @JoinColumn(name = "patient_insurance_id") //owning side
     private Insurance insurance;
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;

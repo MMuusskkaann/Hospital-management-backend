@@ -1,22 +1,20 @@
 package com.muskan.Hospital.Management.entity;
-import java.util.*;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+//import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
+//import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
-import java.util.HashSet;
-
+import java.util.*;
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class doctors {
+public class Doctors {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +30,7 @@ public class doctors {
     private String email;
 
    @ManyToMany(mappedBy = "doctors")
-   private Set<Department> department = new HashSet<>();
+   private Set<Department> departments = new HashSet<>();
+
 
 }

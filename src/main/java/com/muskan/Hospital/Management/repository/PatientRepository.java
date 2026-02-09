@@ -3,7 +3,6 @@ import org.springframework.data.domain.Pageable;
 import com.muskan.Hospital.Management.dto.BloodGroupcountResponseEntity;
 import com.muskan.Hospital.Management.entity.Patient;
 import jakarta.transaction.Transactional;
-import org.hibernate.boot.model.source.spi.JpaCallbackSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
