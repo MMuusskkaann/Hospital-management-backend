@@ -23,6 +23,7 @@ public class Department {
     private String name;
 
     @OneToOne
+    @JoinColumn(name = "head_doctor_id")
     private Doctors headDoctor;
 
     @ManyToMany
@@ -30,7 +31,6 @@ public class Department {
             name = "my_dept_doctors",
             joinColumns = @JoinColumn(name = "dept_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
-    )
-
+ )
     private Set<Doctors> doctors = new HashSet<>() ;
 }

@@ -29,8 +29,11 @@ public class Doctors {
     @Column(nullable = false,unique = true,length = 100)
     private String email;
 
-   @ManyToMany(mappedBy = "doctors")
-   private Set<Department> departments = new HashSet<>();
+    @ManyToMany(mappedBy = "doctors")
+    private Set<Department> departments = new HashSet<>();
 
+    // 🔥 MUST for OneToOne reverse mapping
+    @OneToOne(mappedBy = "headDoctor")
+    private Department headOfDepartment;
 
 }

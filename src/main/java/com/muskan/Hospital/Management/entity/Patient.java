@@ -9,10 +9,11 @@ import java.util.*;
 
 @Entity
 @ToString
-@Table
+@Table(name = "patient_table")
 public class Patient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -78,7 +79,7 @@ public class Patient {
         this.gender = gender;
     }
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "patient_insurance_id") //owning side
     private Insurance insurance;
 
@@ -98,8 +99,9 @@ public class Patient {
         this.appointments = appointments;
     }
 
-    @OneToMany(mappedBy = "patient")
-    private List<Appointment> appointments;
+    @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE},orphanRemoval = true)
+    @ToString.Exclude
+    private List<Appointment> appointments = new ArrayList<>();
 
 
     //    @Override

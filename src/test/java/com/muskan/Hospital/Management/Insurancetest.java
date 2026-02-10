@@ -16,6 +16,7 @@ public class Insurancetest {
     private InsuranceService insuranceService;
     @Test
     public void testInsurance(){
+
         Insurance insurance= Insurance.builder()
                 .policyNumber("HDFC_1234")
                 .provider("HDFC")
