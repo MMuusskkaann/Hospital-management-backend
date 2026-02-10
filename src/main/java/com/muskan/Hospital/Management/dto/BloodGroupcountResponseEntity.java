@@ -1,7 +1,5 @@
 package com.muskan.Hospital.Management.dto;
 
-import com.muskan.Hospital.Management.dto.BloodGroupType;
-
 public class BloodGroupcountResponseEntity {
 
     private BloodGroupType bloodGroupType;

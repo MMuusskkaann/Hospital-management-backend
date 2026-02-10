@@ -1,14 +1,13 @@
-package com.muskan.Hospital.Management.service;
+package com.muskan.Hospital.Management;
 
-import com.muskan.Hospital.Management.dto.BloodGroupType;
 import com.muskan.Hospital.Management.dto.BloodGroupcountResponseEntity;
 import com.muskan.Hospital.Management.entity.Patient;
 import com.muskan.Hospital.Management.repository.PatientRepository;
+import com.muskan.Hospital.Management.service.PatientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @SpringBootTest

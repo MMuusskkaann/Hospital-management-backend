@@ -1,4 +1,4 @@
-package com.muskan.Hospital.Management.entity;
+ipackage com.muskan.Hospital.Management.entity;
 
 
 import jakarta.persistence.*;
@@ -23,16 +23,13 @@ public class Department {
     private String name;
 
     @OneToOne
-    private doctors headDoctor;
+    private Doctors headDoctor;
 
     @ManyToMany
-
-
     @JoinTable(
             name = "my_dept_doctors",
             joinColumns = @JoinColumn(name = "dept_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
-
-
-    private Set<doctors> doctor = new HashSet<>() ;
+ )
+    private Set<Doctors> doctors = new HashSet<>() ;
 }
