@@ -1,4 +1,4 @@
-package com.muskan.Hospital.Management.entity;
+ipackage com.muskan.Hospital.Management.entity;
 
 
 import jakarta.persistence.*;
@@ -30,7 +30,6 @@ public class Department {
             name = "my_dept_doctors",
             joinColumns = @JoinColumn(name = "dept_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
-    )
-
+ )
     private Set<Doctors> doctors = new HashSet<>() ;
 }

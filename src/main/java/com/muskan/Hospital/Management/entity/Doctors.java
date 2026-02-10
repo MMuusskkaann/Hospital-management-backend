@@ -1,4 +1,4 @@
-package com.muskan.Hospital.Management.entity;
+ipackage com.muskan.Hospital.Management.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +30,9 @@ public class Doctors {
     private String email;
 
    @ManyToMany(mappedBy = "doctors")
+
    private Set<Department> departments = new HashSet<>();
+
 
 
 }
