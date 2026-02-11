@@ -1,6 +1,6 @@
 package com.muskan.Hospital.Management.entity;
 
-
+import com.muskan.Hospital.Management.entity.Doctors;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
