@@ -1,5 +1,4 @@
 package com.muskan.Hospital.Management.entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,11 +28,15 @@ public class Doctors {
     @Column(nullable = false,unique = true,length = 100)
     private String email;
 
+
     @ManyToMany(mappedBy = "doctors")
     private Set<Department> departments = new HashSet<>();
 
-    // 🔥 MUST for OneToOne reverse mapping
+
+    //  MUST for OneToOne reverse mapping
     @OneToOne(mappedBy = "headDoctor")
     private Department headOfDepartment;
 
+    @OneToMany(mappedBy = "doctor")  // must match Appointment.doctor
+    private List<Appointment> appointments = new ArrayList<>();
 }

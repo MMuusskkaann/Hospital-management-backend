@@ -79,7 +79,7 @@ public class Patient {
         this.gender = gender;
     }
 
-    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL},orphanRemoval = true)
     @JoinColumn(name = "patient_insurance_id") //owning side
     private Insurance insurance;
 
@@ -99,8 +99,7 @@ public class Patient {
         this.appointments = appointments;
     }
 
-    @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE},orphanRemoval = true)
-    @ToString.Exclude
+    @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE},orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Appointment> appointments = new ArrayList<>();
 
 

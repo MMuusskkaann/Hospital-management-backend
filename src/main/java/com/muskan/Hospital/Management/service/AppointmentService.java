@@ -6,6 +6,7 @@ import com.muskan.Hospital.Management.entity.Patient;
 import com.muskan.Hospital.Management.repository.AppointmentRepository;
 import com.muskan.Hospital.Management.repository.DoctorRepository;
 import com.muskan.Hospital.Management.repository.PatientRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +30,14 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
 
     }
+
+    @Transactional
+    public Appointment reAssignAppointmentToAnotherDoctor(Long appointmentId, Long newDoctorId){
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow();
+        Doctors doctor = doctorRepository.findById(newDoctorId).orElseThrow();
+
+        appointment.setDoctor(doctor); // JPA automatically updates because of @Transactional
+        return appointment;
+    }
+
 }

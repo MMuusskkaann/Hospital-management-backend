@@ -5,12 +5,15 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString(exclude = {"patient","doctor"})
 public class Appointment {
 
@@ -31,4 +34,5 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Doctors doctor;
+
 }
