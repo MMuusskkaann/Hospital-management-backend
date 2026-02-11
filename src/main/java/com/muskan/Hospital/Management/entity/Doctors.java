@@ -1,4 +1,4 @@
-package com.muskan.Hospital.Management.entity;
+ipackage com.muskan.Hospital.Management.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,8 +29,10 @@ public class Doctors {
     @Column(nullable = false,unique = true,length = 100)
     private String email;
 
+
     @ManyToMany(mappedBy = "doctors")
     private Set<Department> departments = new HashSet<>();
+
 
     // 🔥 MUST for OneToOne reverse mapping
     @OneToOne(mappedBy = "headDoctor")

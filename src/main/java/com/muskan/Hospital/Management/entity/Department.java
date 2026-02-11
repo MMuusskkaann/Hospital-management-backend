@@ -1,4 +1,4 @@
-package com.muskan.Hospital.Management.entity;
+ipackage com.muskan.Hospital.Management.entity;
 
 
 import jakarta.persistence.*;
