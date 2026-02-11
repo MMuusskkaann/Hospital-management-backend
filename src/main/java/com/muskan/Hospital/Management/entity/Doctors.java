@@ -1,10 +1,6 @@
 package com.muskan.Hospital.Management.entity;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 //import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 //import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
@@ -14,6 +10,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Doctors {
 
     @Id
@@ -29,11 +26,18 @@ public class Doctors {
     @Column(nullable = false,unique = true,length = 100)
     private String email;
 
+    @ManyToOne   // or @OneToOne (depends on your design)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @ManyToMany(mappedBy = "doctors")
     private Set<Department> departments = new HashSet<>();
 
-    // 🔥 MUST for OneToOne reverse mapping
+
+    //  MUST for OneToOne reverse mapping
     @OneToOne(mappedBy = "headDoctor")
     private Department headOfDepartment;
 
+    @OneToMany(mappedBy = "doctor")  // must match Appointment.doctor
+    private List<Appointment> appointments = new ArrayList<>();
 }
