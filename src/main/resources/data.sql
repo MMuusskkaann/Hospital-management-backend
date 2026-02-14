@@ -1,30 +1,23 @@
--- DROP table if exists (optional, safe for dev)
-DROP TABLE IF EXISTS patient_table;
+-- Patients
+INSERT INTO patient_table(id, name, birth_date, email, gender, blood_group) VALUES
+(1, 'Alice', '1993-02-14', 'alice@example.com', 'F', 'A_POSITIVE'),
+(2, 'Bob', '1998-06-20', 'bob@example.com', 'M', 'B_NEGATIVE'),
+(3, 'Charlie', '1983-11-05', 'charlie@example.com', 'M', 'O_POSITIVE'),
+(4, 'David', '1988-03-12', 'david@example.com', 'M', 'AB_POSITIVE'),
+(5, 'Eve', '1995-09-30', 'eve@example.com', 'F', 'A_NEGATIVE');
 
--- CREATE table
-CREATE TABLE patient_table (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    birth_date DATE NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    gender VARCHAR(10),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT unique_patient_email UNIQUE (email),
-    CONSTRAINT unique_patient_name_birth_date UNIQUE (name, birth_date)
-);
 
--- CREATE index
-CREATE INDEX idx_patient_birth_date ON patient_table (birth_date);
+-- Doctors
+INSERT INTO doctors(id, name, specialization, email) VALUES
+(1, 'Dr. Rakesh Mehta', 'Cardiology', 'rakesh.mehta@gmail.com'),
+(2, 'Dr. Sneha Kapoor', 'Dermatology', 'sneha.kapoor12@gmail.com'),
+(3, 'Dr. Arjun Nair', 'Orthopedics', 'arjun.nair234@gmail.com');
 
--- INSERT sample data
-INSERT INTO patient_table (name, birth_date, email, gender) VALUES
-('John Doe', '1990-05-12', 'john.doe@example.com', 'Male'),
-('Jane Smith', '1985-11-20', 'jane.smith@example.com', 'Female'),
-('Michael Johnson', '1992-08-03', 'michael.johnson@example.com', 'Male'),
-('Emily Davis', '1995-02-14', 'emily.davis@example.com', 'Female'),
-('William Brown', '1988-07-30', 'william.brown@example.com', 'Male'),
-('Olivia Wilson', '1991-12-25', 'olivia.wilson@example.com', 'Female'),
-('James Taylor', '1987-03-10', 'james.taylor@example.com', 'Male'),
-('Sophia Anderson', '1993-09-05', 'sophia.anderson@example.com', 'Female'),
-('Benjamin Thomas', '1994-06-18', 'benjamin.thomas@example.com', 'Male'),
-('Isabella Martinez', '1989-10-22', 'isabella.martinez@example.com', 'Female');
+-- Appointments
+INSERT INTO appointment(appointment_time, reason, doctor_id, patient_id) VALUES
+('2025-07-01 10:30:00', 'General Checkup', 1, 2),
+('2025-07-02 11:00:00', 'Skin Rash', 2, 2),
+('2025-07-03 13:30:00', 'Knee Pain', 3, 3),
+('2025-07-04 08:20:00', 'Follow up visit', 1, 1),
+('2025-07-05 16:15:00', 'Consultation', 1, 4),
+('2025-07-06 14:30:00', 'Allergy Treatment', 2, 5);
