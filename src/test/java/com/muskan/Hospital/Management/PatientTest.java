@@ -1,12 +1,13 @@
-package com.muskan.Hospital.Management.service;
+package com.muskan.Hospital.Management;
 
+import com.muskan.Hospital.Management.dto.BloodGroupcountResponseEntity;
 import com.muskan.Hospital.Management.entity.Patient;
 import com.muskan.Hospital.Management.repository.PatientRepository;
+import com.muskan.Hospital.Management.service.PatientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @SpringBootTest
@@ -23,7 +24,7 @@ public class PatientTest {
     @Test
     public  void testPatientRepository(){
 
-        List<Patient> patients = patientRepository.findAll();
+        List<Patient> patients = patientRepository.findAllPatientWithAppointment();
         System.out.println("Number of patients: " + patients.size());
         patients.forEach(System.out::println);
     }
@@ -51,8 +52,13 @@ public class PatientTest {
 //            System.out.println(objects[0]+ " " +objects[1]);
 //        }
 
-        int rowsUpdate = patientRepository.updateNameWithId("Arav sharma", 1L);
-        System.out.println(rowsUpdate);
+//        int rowsUpdate = patientRepository.updateNameWithId("Arav sharma", 1L);
+//        System.out.println(rowsUpdate);
+
+        List<BloodGroupcountResponseEntity> list = patientRepository.countEachBloodGroupType();
+        for (BloodGroupcountResponseEntity b : list) {
+            System.out.println(b.getBloodGroupType() + " -> " + b.getCount());
+        }
     }
 }
 
