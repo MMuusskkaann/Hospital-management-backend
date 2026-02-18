@@ -25,24 +25,24 @@ public class AppConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//        return configuration.getAuthenticationManager();
+//    }
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        UserDetails user1 = User.withUsername("admin")
-                .password(passwordEncoder().encode("pass"))
-                .roles("ADMIN")
-                .build();
-
-        UserDetails user2 = User.withUsername("patient")
-                .password(passwordEncoder().encode("pass"))
-                .roles("PATIENT")
-                .build();
-
-        return new InMemoryUserDetailsManager(user1, user2);
-    }
+//    @Bean
+//    UserDetailsService userDetailsService() {
+//        UserDetails user1 = User.withUsername("admin")
+//                .password(passwordEncoder().encode("pass"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        UserDetails user2 = User.withUsername("patient")
+//                .password(passwordEncoder().encode("pass"))
+//                .roles("PATIENT")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user1, user2);
+//    }
 
 }

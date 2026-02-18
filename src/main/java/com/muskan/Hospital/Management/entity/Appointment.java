@@ -1,12 +1,10 @@
 package com.muskan.Hospital.Management.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -14,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"patient","doctor"})
+@ToString(exclude = {"patient", "doctor"})
 public class Appointment {
 
     @Id
@@ -27,13 +25,15 @@ public class Appointment {
     @Column
     private String reason;
 
-    @ManyToOne  //many appointment to patient one
-    @JoinColumn(name =  "patient_id",nullable = false) //patient is required but not nullable
+    // Many appointments belong to one patient
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    @JsonIgnore
     private Patient patient;
 
+    // Many appointments belong to one doctor
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonIgnore   // 🔥 add this if Doctor also has List<Appointment>
     private Doctors doctor;
-
-
 }

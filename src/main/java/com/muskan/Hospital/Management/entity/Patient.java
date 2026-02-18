@@ -1,5 +1,6 @@
 package com.muskan.Hospital.Management.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muskan.Hospital.Management.dto.BloodGroupType;
 import jakarta.persistence.*;
 import lombok.ToString;
@@ -101,6 +102,11 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE},orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Appointment> appointments = new ArrayList<>();
+
+//    @ManyToOne
+//    @JoinColumn(name = "patient_id", nullable = true)
+//    @JsonIgnore
+//    private Patient patient;
 
 
     //    @Override
