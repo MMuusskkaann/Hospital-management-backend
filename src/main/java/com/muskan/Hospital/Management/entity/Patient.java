@@ -1,19 +1,19 @@
 package com.muskan.Hospital.Management.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.muskan.Hospital.Management.dto.BloodGroupType;
+import jakarta.persistence.*;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @ToString
-@Table
+@Table(name = "patient_table")
 public class Patient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -25,8 +25,22 @@ public class Patient {
 
     private String gender;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "blood_group")
+    private BloodGroupType bloodGroup;
+
+
+
     public Long getId() {
         return id;
+    }
+
+    public BloodGroupType getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(BloodGroupType bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 
     public void setId(Long id) {
@@ -64,6 +78,30 @@ public class Patient {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    @OneToOne(cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JoinColumn(name = "patient_insurance_id") //owning side
+    private Insurance insurance;
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE},orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<Appointment> appointments = new ArrayList<>();
+
 
     //    @Override
 //    public String toString() {

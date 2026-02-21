@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BloodGroupCountResponseEntity {
-
-    private BloodGroupType bloodGroupType;
-    private Long count;
+public class DoctorResponseDto {
+    private Long id;
+    private String name;
+    private String specialization;
+    private String email;
 }
