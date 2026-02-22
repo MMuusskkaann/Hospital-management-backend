@@ -19,6 +19,17 @@ import java.util.stream.Collectors;
 @Builder
 @Table(name = "app_user")
 public class User implements UserDetails {
+@Table(name = "app_user", indexes = {
+
+        @Index(name = "idx_provider_id",
+                columnList = "providerId")
+})
+
+public class User {
+
+        @Index(name = "idx_provider_id_provider_type", columnList = "providerId, providerType")
+}
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

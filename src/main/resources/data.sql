@@ -1,8 +1,12 @@
+
 TRUNCATE TABLE appointment RESTART IDENTITY CASCADE;
 TRUNCATE TABLE doctors RESTART IDENTITY CASCADE;
 TRUNCATE TABLE patient_table RESTART IDENTITY CASCADE;
 
+<<<<<<< HEAD
 -- ======================
+=======
+>>>>>>> origin/main
 -- Patients
 -- ======================
 INSERT INTO patient_table(id, name, birth_date, email, gender, blood_group) VALUES
@@ -26,6 +30,7 @@ INSERT INTO doctors(id, name, specialization, email) VALUES
 INSERT INTO appointment(appointment_time, reason, doctor_id, patient_id) VALUES
 ('2025-07-01 10:30:00', 'General Checkup', 1, 2),
 ('2025-07-02 11:00:00', 'Skin Rash', 2, 2),
+A
 ('2025-07-03 13:30:00', 'Knee Pain', 3, 3),
 ('2025-07-04 08:20:00', 'Follow up visit', 1, 1),
 ('2025-07-05 16:15:00', 'Consultation', 1, 4),
