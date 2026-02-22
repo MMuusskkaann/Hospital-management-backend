@@ -1,8 +1,8 @@
+
 TRUNCATE TABLE appointment RESTART IDENTITY CASCADE;
 TRUNCATE TABLE doctors RESTART IDENTITY CASCADE;
 TRUNCATE TABLE patient_table RESTART IDENTITY CASCADE;
 
--- ======================
 -- Patients
 -- ======================
 INSERT INTO patient_table(id, name, birth_date, email, gender, blood_group) VALUES
