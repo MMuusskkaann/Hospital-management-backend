@@ -48,7 +48,7 @@ public class DoctorService {
                 .user( user)
                 .build();
 
-        user.getRoles().add(RoleType.DOCTOR);
+//        user.getRoles().add(RoleType.DOCTOR);
 
         return modelMapper.map(doctorRepository.save(doctor), DoctorResponseDto.class);
     }
