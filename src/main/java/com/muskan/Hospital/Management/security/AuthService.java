@@ -6,10 +6,12 @@ import com.muskan.Hospital.Management.dto.SignupResponseDto;
 import com.muskan.Hospital.Management.entity.User;
 import com.muskan.Hospital.Management.entity.type.AuthProviderType;
 import com.muskan.Hospital.Management.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +40,7 @@ public class AuthService {
         return new LoginResponseDto(token,user.getId());
     }
 
-    public SignupResponseDto signup(LoginRequestDto signupRequestDto) {
+    public User signUpInternal(LoginRequestDto signupRequestDto,AuthProviderType authProviderType,String providerId){
         User existingUser = userRepository.findByUsername(signupRequestDto.getUsername()).orElse(null);
         if (existingUser != null) {
             throw new IllegalArgumentException("user already exists");
@@ -46,16 +48,24 @@ public class AuthService {
 
         User user = User.builder()
                 .username(signupRequestDto.getUsername())
-                .password(passwordEncoder.encode(signupRequestDto.getPassword())) // make sure password is hashed before saving!
+                .providerId(providerId)
+                .providerType(authProviderType)
                 .build();
 
-        user = userRepository.save(user);
+        if(authProviderType == authProviderType.EMAIL){
+            user.setPassword(passwordEncoder.encode(signupRequestDto.getPassword()));
+        }
 
-        String token = authUtil.generateAccessToken(user);
+        return userRepository.save(user);
+    }
 
+    public SignupResponseDto signup(LoginRequestDto signupRequestDto) {
+
+        User user = signUpInternal(signupRequestDto,AuthProviderType.EMAIL,null);
         return new SignupResponseDto(user.getId(),user.getUsername());
     }
 
+    @Transactional
     public ResponseEntity<LoginResponseDto> handleOAuth2LoginRequest(OAuth2User auth2User, String registrationId) {
 
         // fetch provider type and provider id
@@ -68,6 +78,33 @@ public class AuthService {
 
         User user = userRepository.findByProviderIdAndProviderType(providerId,providerType).orElse(null);
 
+
+       String email = auth2User.getAttribute("email"); //user login through email
+
+        //ak email id vala user ak hei jgh hona chahiye
+        User emailUser = userRepository.findByUsername(email).orElse(null);
+
+        if(user == null && emailUser == null){
+            // sign up flow
+
+            String username = authUtil.determinedUsUsernameFromOAuth2User(auth2User,registrationId,providerId);
+            User signupResponseDto = signUpInternal(new LoginRequestDto(username,null),providerType,providerId);
+        }
+
+        else if (user != null){
+            if(email != null && !email.isBlank()&& !email.equals(user.getUsername())){
+                          user.setUsername(email);
+                          userRepository.save(user);
+            }
+        }
+
+        else{
+            throw new BadCredentialsException("This email is already registered with provider " + emailUser.getProviderType());
+        }
+
+        LoginResponseDto loginResponseDto = new LoginResponseDto(authUtil.generateAccessToken(user),user.getId() );
+
+        return ResponseEntity.ok(loginResponseDto);
     }
 }
 
