@@ -40,8 +40,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 return;
             }
 
-            String token = requestTokenHeader.split("Bearer hn")[1];
-            //token like this ---> "Bearer uweehff87898h32ut723fevghvghv"
+            String token = requestTokenHeader.split("Bearer ")[1];
+           //token like this ---> "Bearer uweehff87898h32ut723fevghvghv"
 
             String username = authUtil.getUsernameFromToken(token);
 

@@ -1,7 +1,9 @@
 package com.muskan.Hospital.Management.security;
 
 import com.muskan.Hospital.Management.entity.User;
+
 import com.muskan.Hospital.Management.entity.type.AuthProviderType;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -73,4 +75,3 @@ public class AuthUtil {
         }
         return providerId;
     }
-}

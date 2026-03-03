@@ -27,6 +27,7 @@ public class User implements UserDetails {
 
     private String password;
 
+
     private String providerId;
 
     @Enumerated(EnumType.STRING)
