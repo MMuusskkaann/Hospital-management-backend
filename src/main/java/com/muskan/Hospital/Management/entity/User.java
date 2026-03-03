@@ -1,5 +1,6 @@
 package com.muskan.Hospital.Management.entity;
 
+import com.muskan.Hospital.Management.entity.type.AuthProviderType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +26,12 @@ public class User implements UserDetails {
     private String username;
 
     private String password;
+
+
+    private String providerId;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProviderType providerType;
 
     // Implement all UserDetails methods
     @Override
