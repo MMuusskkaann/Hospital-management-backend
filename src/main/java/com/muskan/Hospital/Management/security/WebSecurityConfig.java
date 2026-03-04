@@ -55,8 +55,6 @@ public class WebSecurityConfig {
                 )
                         .successHandler(oAuth2SuccessHandler)
                 );
-//                .anyRequest().authenticated()
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
