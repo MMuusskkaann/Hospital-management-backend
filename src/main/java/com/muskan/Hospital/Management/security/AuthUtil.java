@@ -59,19 +59,33 @@ public class AuthUtil {
         };
     }
 
-    public String determineProviderIdFromAuth2User(OAuth2User oAuth2User,String registrationId){
-        String providerId = switch (registrationId.toLowerCase()){
+    public String determineProviderIdFromAuth2User(OAuth2User oAuth2User,String registrationId) {
+        String providerId = switch (registrationId.toLowerCase()) {
             case "google" -> oAuth2User.getAttribute("sub");
             case "github" -> oAuth2User.getAttribute("id");
             default -> {
-                log.error("Unsupported OAuth2 provider : {}",registrationId);
+                log.error("Unsupported OAuth2 provider : {}", registrationId);
                 throw new IllegalArgumentException("Unsupported OAuth provider : " + registrationId);
             }
         };
 
-        if(providerId == null || providerId.isBlank()){
+        if (providerId == null || providerId.isBlank()) {
             log.error("Unable to determine providerId for provider: {}", registrationId);
             throw new IllegalArgumentException("Unable to determine provideId for OAuth2 login");
         }
         return providerId;
+       }
+
+       public String determinedUsUsernameFromOAuth2User(OAuth2User oAuth2User,String registrationId,String providerId){
+         String email = oAuth2User.getAttribute("email");
+         if(email != null && !email.isBlank()){
+             return email;
+         }
+
+         return switch (registrationId.toLowerCase()){
+             case "google" -> oAuth2User.getAttribute("sub");
+             case "github" -> oAuth2User.getAttribute("login");
+             default -> providerId;
+         };
+       }
     }
