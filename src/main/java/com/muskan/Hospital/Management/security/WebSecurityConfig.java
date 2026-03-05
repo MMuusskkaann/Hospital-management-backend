@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.OAuth2LoginDsl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,15 +25,17 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import java.io.IOException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     private  final JwtAuthFilter jwtAuthFilter;
-
+    private final HandlerExceptionResolver handlerExceptionResolver;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
@@ -46,6 +49,21 @@ public class WebSecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
+
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+//                .oauth2Login(oAuth2 -> oAuth2
+//                                .failureHandler(
+//                        (request, response, exception) -> {
+//                            log.error("OAuth2 Error : {}", exception.getMessage());
+//                        }
+//                )
+//                        .successHandler(oAuth2SuccessHandler)
+//                )
+//                .exceptionHandling(exceptionHandlingConfigurer ->
+//                        exceptionHandlingConfigurer.accessDeniedHandler((request, response, accessDeniedException) -> {
+//                            handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
+//                        }));
+
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oAuth2 -> oAuth2
                                 .failureHandler(
@@ -55,6 +73,7 @@ public class WebSecurityConfig {
                 )
                         .successHandler(oAuth2SuccessHandler)
                 );
+
         return http.build();
     }
 }

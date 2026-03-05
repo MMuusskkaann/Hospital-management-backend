@@ -3,6 +3,9 @@ package com.muskan.Hospital.Management.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.muskan.Hospital.Management.dto.BloodGroupType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -11,26 +14,34 @@ import java.util.*;
 @Entity
 @ToString
 @Table(name = "patient_table")
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false,length = 40)
     private String name;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Column(unique = true,nullable = false)
     private String email;
 
     private String gender;
 
+    @OneToOne
+    @MapsId  //patient or user kei id ko equal krr dega mapsid
+    private User user;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "blood_group")
     private BloodGroupType bloodGroup;
-
-
 
     public Long getId() {
         return id;

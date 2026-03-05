@@ -2,6 +2,7 @@ package com.muskan.Hospital.Management.Controller;
 
 import com.muskan.Hospital.Management.dto.LoginRequestDto;
 import com.muskan.Hospital.Management.dto.LoginResponseDto;
+import com.muskan.Hospital.Management.dto.SignUpRequestDto;
 import com.muskan.Hospital.Management.dto.SignupResponseDto;
 import com.muskan.Hospital.Management.security.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponseDto> signup(@RequestBody LoginRequestDto signupRequestDto){
+    public ResponseEntity<SignupResponseDto> signup(@RequestBody SignUpRequestDto signupRequestDto){
         return ResponseEntity.ok(authService.signup(signupRequestDto));
     }
 

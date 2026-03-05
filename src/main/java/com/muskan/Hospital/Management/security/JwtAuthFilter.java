@@ -33,6 +33,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             log.info("Incoming request : {}", request.getRequestURI());
 
+            if (request.getServletPath().startsWith("/api/v1/auth")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             final String requestTokenHeader = request.getHeader("Authorization");
 
             if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer")) {
@@ -48,7 +53,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 User user = userRepository.findByUsername(username).orElseThrow();
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                        = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                        = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());  //getAuthorities kei ander user kei authorities bhi bta rhe hei
 
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
