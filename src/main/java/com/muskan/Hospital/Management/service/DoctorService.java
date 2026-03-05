@@ -3,7 +3,7 @@ package com.muskan.Hospital.Management.service;
 import com.muskan.Hospital.Management.dto.DoctorResponseDto;
 import com.muskan.Hospital.Management.dto.OnboardDoctorRequestDto;
 import com.muskan.Hospital.Management.entity.Doctors;
-import com.muskan.Hospital.Management.model.RoleType;
+import com.muskan.Hospital.Management.entity.type.RoleType;
 import com.muskan.Hospital.Management.repository.DoctorRepository;
 import com.muskan.Hospital.Management.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -34,7 +34,7 @@ public class DoctorService {
     }
 
 
-    @Transactional
+    @Transactional //only admin can call this
     public DoctorResponseDto onBoardNewDoctor(OnboardDoctorRequestDto onBoardDoctorRequestDto) {
         User user = userRepository.findById(onBoardDoctorRequestDto.getUserId()).orElseThrow();
 
@@ -48,8 +48,8 @@ public class DoctorService {
                 .user( user)
                 .build();
 
-//        user.getRoles().add(RoleType.DOCTOR);
+        user.getRoles().add(RoleType.DOCTOR);
 
-        return modelMapper.map(doctorRepository.save(doctor), DoctorResponseDto.class);
+        return modelMapper.map(doctorRepository.save(doctor),DoctorResponseDto.class);
     }
 }

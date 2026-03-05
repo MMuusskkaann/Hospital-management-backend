@@ -1,5 +1,7 @@
 package com.muskan.Hospital.Management.security;
 
+import com.muskan.Hospital.Management.entity.type.PermissionType;
+import com.muskan.Hospital.Management.entity.type.RoleType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +29,9 @@ import java.io.IOException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import static com.muskan.Hospital.Management.entity.type.PermissionType.*;
+import static com.muskan.Hospital.Management.model.RoleType.*;  // * -> all role accessable
+
 
 @Configuration
 @RequiredArgsConstructor
@@ -46,22 +51,27 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**","/auth/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers(httpMethod.DELETE,"/admin").hasAuthority(APPOINTMENT_DELETE.name()) //agr yei authority hei toh hei delete call krne denge
+                        .requestMatchers("/admin/**").hasRole(RoleType.ADMIN.name()) //admin vale route access by an admin
+                        .requestMatchers("/doctors/**").hasAnyRole(RoleType.DOCTOR.name(),ADMIN.name())
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-//                .oauth2Login(oAuth2 -> oAuth2
-//                                .failureHandler(
-//                        (request, response, exception) -> {
-//                            log.error("OAuth2 Error : {}", exception.getMessage());
-//                        }
-//                )
-//                        .successHandler(oAuth2SuccessHandler)
-//                )
-//                .exceptionHandling(exceptionHandlingConfigurer ->
-//                        exceptionHandlingConfigurer.accessDeniedHandler((request, response, accessDeniedException) -> {
-//                            handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
-//                        }));
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oAuth2 -> oAuth2
+                                .failureHandler(
+                        (request, response, exception) -> {
+                            log.error("OAuth2 Error : {}", exception.getMessage());
+                            handlerExceptionResolver.resolveException(request, response, null, exception);
+                        }
+                )
+                        .successHandler(oAuth2SuccessHandler)
+                )
+                .exceptionHandling(exceptionHandlingConfigurer ->
+                        exceptionHandlingConfigurer.accessDeniedHandler((request, response, accessDeniedException) -> {
+                            handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
+                        }));
+//                );
+
         return http.build();
     }
 }
