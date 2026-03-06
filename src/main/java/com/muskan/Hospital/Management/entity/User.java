@@ -2,6 +2,7 @@ package com.muskan.Hospital.Management.entity;
 
 import com.muskan.Hospital.Management.entity.type.AuthProviderType;
 import com.muskan.Hospital.Management.entity.type.RoleType;
+import com.muskan.Hospital.Management.security.RolePermissionMapping;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -46,10 +47,19 @@ public class User implements UserDetails {
     // Implement all UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(); // return empty list or roles if you have any
+//        return roles.stream()
+//                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+//                .toList();
 
-        return (Collection<? extends GrantedAuthority>) roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()));  //ROLE_ lgana important hei
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        roles.forEach(
+                role -> {
+                    Set<SimpleGrantedAuthority> permissions = RolePermissionMapping.getAuthoritiesForRole(role);
+                    authorities.addAll(permissions);
+                    authorities.add(new SimpleGrantedAuthority("ROLE_"+role.name()));
+                }
+        );
+        return authorities;
     }
 
     @Override
