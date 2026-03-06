@@ -27,7 +27,7 @@ public class Doctors {
     @Column(length = 100)
     private String specialization;
 
-    @Column(nullable = false,unique = true,length = 100)
+    @Column(unique = true,length = 100)
     private String email;
 
     @ManyToOne   // or @OneToOne (depends on your design)
