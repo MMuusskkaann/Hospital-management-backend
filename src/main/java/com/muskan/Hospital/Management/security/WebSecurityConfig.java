@@ -56,11 +56,14 @@ public class WebSecurityConfig {
                         .requestMatchers("/doctors/**").hasAnyRole(RoleType.DOCTOR.name(),ADMIN.name())
                         .anyRequest().authenticated()
                 )
+
+
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oAuth2 -> oAuth2
                                 .failureHandler(
                         (request, response, exception) -> {
                             log.error("OAuth2 Error : {}", exception.getMessage());
+
                             handlerExceptionResolver.resolveException(request, response, null, exception);
                         }
                 )
@@ -70,7 +73,6 @@ public class WebSecurityConfig {
                         exceptionHandlingConfigurer.accessDeniedHandler((request, response, accessDeniedException) -> {
                             handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
                         }));
-//                );
 
         return http.build();
     }
